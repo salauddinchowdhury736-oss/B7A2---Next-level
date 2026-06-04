@@ -37,14 +37,14 @@ async function start(): Promise<void> {
   try {
     // Test database connection before accepting traffic
     await pool.query('SELECT 1');
-    console.log('✅ PostgreSQL connected');
+    console.log(' PostgreSQL connected');
 
     app.listen(ENV.PORT, () => {
-      console.log(`🚀 DevPulse API running on port ${ENV.PORT} [${ENV.NODE_ENV}]`);
+      console.log(` DevPulse API running on port ${ENV.PORT} [${ENV.NODE_ENV}]`);
     });
   } catch (error) {
-    console.error('❌ Database connection failed:', error instanceof Error ? error.message : String(error));
-    console.error('📝 DATABASE_URL:', process.env.DATABASE_URL);
+    console.error(' Database connection failed:', error instanceof Error ? error.message : String(error));
+    console.error(' DATABASE_URL:', process.env.DATABASE_URL);
     process.exit(1);
   }
 }
