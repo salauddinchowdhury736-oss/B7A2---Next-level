@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { issuesService } from './issues.service';
 import { CreateIssueBody, UpdateIssueBody, IssueQueryParams } from './issues.types';
 import { sendSuccess, sendError } from '../../utils/response';
+import { formatIssueResponse, formatIssueWithReporterResponse } from '../../utils/format';
 
 export class IssuesController {
   async createIssue(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -10,7 +11,7 @@ export class IssuesController {
       const body = req.body as CreateIssueBody;
       const reporterId = req.user!.id;
       const issue = await issuesService.createIssue(body, reporterId);
-      sendSuccess(res, StatusCodes.CREATED, 'Issue created successfully', issue);
+      sendSuccess(res, StatusCodes.CREATED, 'Issue created successfully', formatIssueResponse(issue));
     } catch (err) {
       const error = err as NodeJS.ErrnoException;
       const code = Number(error.code);
@@ -26,7 +27,8 @@ export class IssuesController {
     try {
       const params = req.query as unknown as IssueQueryParams;
       const issues = await issuesService.getAllIssues(params);
-      sendSuccess(res, StatusCodes.OK, 'Issues retrived successfully', issues);
+      const formattedIssues = issues.map(formatIssueWithReporterResponse);
+      sendSuccess(res, StatusCodes.OK, 'Issues retrived successfully', formattedIssues);
     } catch (err) {
       const error = err as NodeJS.ErrnoException;
       const code = Number(error.code);
@@ -46,7 +48,7 @@ export class IssuesController {
         return;
       }
       const issue = await issuesService.getIssueById(id);
-      sendSuccess(res, StatusCodes.OK, 'Issue retrived successfully', issue);
+      sendSuccess(res, StatusCodes.OK, 'Issue retrived successfully', formatIssueWithReporterResponse(issue));
     } catch (err) {
       const error = err as NodeJS.ErrnoException;
       const code = Number(error.code);
@@ -68,7 +70,7 @@ export class IssuesController {
       const body = req.body as UpdateIssueBody;
       const { id: requesterId, role } = req.user!;
       const issue = await issuesService.updateIssue(id, body, requesterId, role);
-      sendSuccess(res, StatusCodes.OK, 'Issue updated successfully', issue);
+      sendSuccess(res, StatusCodes.OK, 'Issue updated successfully', formatIssueResponse(issue));
     } catch (err) {
       const error = err as NodeJS.ErrnoException;
       const code = Number(error.code);

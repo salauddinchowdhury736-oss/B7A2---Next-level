@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { authService } from './auth.service';
 import { SignupBody, LoginBody } from './auth.types';
 import { sendSuccess, sendError } from '../../utils/response';
+import { formatUserResponse } from '../../utils/format';
 
 export class AuthController {
   async signup(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -16,7 +17,7 @@ export class AuthController {
       }
 
       const user = await authService.signup(body);
-      sendSuccess(res, StatusCodes.CREATED, 'User registered successfully', user);
+      sendSuccess(res, StatusCodes.CREATED, 'User registered successfully', formatUserResponse(user));
     } catch (err) {
       const error = err as NodeJS.ErrnoException;
       const code = Number(error.code);
@@ -38,7 +39,11 @@ export class AuthController {
       }
 
       const result = await authService.login(body);
-      sendSuccess(res, StatusCodes.OK, 'Login successful', result);
+      const formattedResult = {
+        token: result.token,
+        user: formatUserResponse(result.user),
+      };
+      sendSuccess(res, StatusCodes.OK, 'Login successful', formattedResult);
     } catch (err) {
       const error = err as NodeJS.ErrnoException;
       const code = Number(error.code);
