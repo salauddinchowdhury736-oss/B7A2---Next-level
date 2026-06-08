@@ -1,0 +1,11 @@
+node_modules
+.git
+.gitignore
+README.md
+*.log
+.env
+.env.local
+.env.*.local
+src
+tsconfig.json
+schema.sql
