@@ -6,15 +6,13 @@ dotenv.config();
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-});
-
-pool.on('connect', () => {
-  console.log('Connected to PostgreSQL database');
+  max: 2,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
 });
 
 pool.on('error', (err: Error) => {
   console.error('Unexpected database error:', err.message);
-  process.exit(1);
 });
 
 export default pool;
