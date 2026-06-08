@@ -23,18 +23,6 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/issues', issuesRoutes);
 
-app.get('/', (_req, res) => {
-  res.json({ 
-    success: true, 
-    message: 'Welcome to DevPulse API', 
-    version: '1.0.0',
-    endpoints: {
-      health: '/health',
-      auth: '/api/auth',
-      issues: '/api/issues'
-    }
-  });
-});
 
 app.get('/health', (_req, res) => {
   res.json({ success: true, message: 'DevPulse API is running.' });
