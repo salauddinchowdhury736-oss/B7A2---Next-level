@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'http';
-import app from '../src/app';
+import app from '../dist/app';
 
 export default (req: IncomingMessage, res: ServerResponse) => {
   return app(req, res);
