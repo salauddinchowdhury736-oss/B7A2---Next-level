@@ -34,19 +34,30 @@ app.use((_req, res) => {
 app.use(errorHandler);
 
 async function start(): Promise<void> {
+  console.log('📋 Configuration:');
+  console.log(`   NODE_ENV: ${ENV.NODE_ENV}`);
+  console.log(`   PORT: ${ENV.PORT}`);
+  console.log(`   DATABASE_URL: ${ENV.DATABASE_URL}`);
+  
   try {
-    // Test database connection before accepting traffic
+    // Test database connection (don't block startup if it fails)
+    console.log('\n🔄 Attempting to connect to Neon database...');
     await pool.query('SELECT 1');
-    console.log(' PostgreSQL connected');
-
-    app.listen(ENV.PORT, () => {
-      console.log(` DevPulse API running on port ${ENV.PORT} [${ENV.NODE_ENV}]`);
-    });
+    console.log('✅ PostgreSQL connected successfully');
   } catch (error) {
-    console.error(' Database connection failed:', error instanceof Error ? error.message : String(error));
-    console.error(' DATABASE_URL:', process.env.DATABASE_URL);
-    process.exit(1);
+    console.error('❌ Database connection error:');
+    if (error instanceof Error) {
+      console.error('   Error:', error.message);
+      console.error('   Code:', (error as any).code);
+    } else {
+      console.error('   Error:', String(error));
+    }
+    console.warn('⚠️ Continuing without database...');
   }
+
+  app.listen(ENV.PORT, () => {
+    console.log(`\n✅ DevPulse API running on http://localhost:${ENV.PORT} [${ENV.NODE_ENV}]`);
+  });
 }
 
 start();

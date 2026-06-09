@@ -1,0 +1,26 @@
+### Test API Endpoints
+
+### Health Check
+GET http://localhost:5000/health
+
+### Signup Endpoint (CORRECT PATH: /api/auth/signup)
+POST http://localhost:5000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "name": "Test User"
+}
+
+### Login Endpoint
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Get Issues
+GET http://localhost:5000/api/issues
