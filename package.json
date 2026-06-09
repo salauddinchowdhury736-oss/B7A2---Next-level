@@ -2,12 +2,11 @@
   "name": "devpulse",
   "version": "1.0.0",
   "description": "DevPulse – Internal Tech Issue & Feature Tracker",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts"
-  },
+  "main": "dist/index.js","scripts": {
+  "build": "tsc",
+  "start": "node dist/server.js",
+  "dev": "ts-node src/server.ts"
+},
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.3",
