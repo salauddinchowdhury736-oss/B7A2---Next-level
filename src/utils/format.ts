@@ -1,4 +1,4 @@
-import { IssueRecord, IssueWithReporter, IssueReporter } from '../modules/issues/issues.types';
+import type { IssueRecord, IssueWithReporter, IssueReporter } from '../modules/issues/issues.types';
 
 /**
  * Format issue response with fields in specification order

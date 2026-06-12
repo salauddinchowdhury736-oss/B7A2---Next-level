@@ -24,6 +24,32 @@ app.use('/api/auth', authRoutes);
 app.use('/api/issues', issuesRoutes);
 
 
+app.get('/', (_req, res) => {
+  res.json({
+    success: true,
+    message: 'Welcome to DevPulse API',
+    data: {
+      service: 'DevPulse API',
+      version: '1.0.0',
+      description: 'Internal Tech Issue & Feature Tracker',
+      endpoints: {
+        auth: {
+          signup: 'POST /api/auth/signup',
+          login: 'POST /api/auth/login',
+        },
+        issues: {
+          create: 'POST /api/issues (requires auth)',
+          getAll: 'GET /api/issues',
+          getById: 'GET /api/issues/:id',
+          update: 'PATCH /api/issues/:id (requires auth)',
+          delete: 'DELETE /api/issues/:id (requires auth)',
+        },
+        health: 'GET /health',
+      },
+    },
+  });
+});
+
 app.get('/health', (_req, res) => {
   res.json({ success: true, message: 'DevPulse API is running.' });
 });

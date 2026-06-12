@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { authService } from './auth.service';
-import { SignupBody, LoginBody } from './auth.types';
+import type { SignupBody, LoginBody } from './auth.types';
 import { sendSuccess, sendError } from '../../utils/response';
 import { formatUserResponse } from '../../utils/format';
 
