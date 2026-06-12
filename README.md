@@ -2,7 +2,7 @@
 
 > Internal Tech Issue & Feature Tracker — A collaborative platform for software teams to report bugs, suggest features, and coordinate resolutions.
 
-**Live URL:** `https://your-deployment.up.railway.app`
+**Live URL:** `https://devpulse-pied.vercel.app/`
 
 ---
 
